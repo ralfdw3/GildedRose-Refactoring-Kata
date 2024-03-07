@@ -11,7 +11,7 @@ class GildedRoseTest {
     @Test
     void conjured_shouldLoseTwoPointsOfQualityEveryDay() {
         Item[] items = new Item[] {
-            new Item("Conjured", 10, 30)
+            new Item("Conjured Mana Cake", 10, 30)
         };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
@@ -23,7 +23,7 @@ class GildedRoseTest {
     @Test
     void conjured_shouldLoseFourPointsOfQualityEveryDayAfterTheSellIn() {
         Item[] items = new Item[] {
-            new Item("Conjured", 0, 30)
+            new Item("Conjured Mana Cake", 0, 30)
         };
         GildedRose app = new GildedRose(items);
         app.updateQuality();

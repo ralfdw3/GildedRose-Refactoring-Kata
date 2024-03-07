@@ -12,10 +12,10 @@ public class GildedRose {
             if (!items[i].name.equals("Aged Brie")
                 && !items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
                 if (items[i].quality > 0) {
-                    if (!items[i].name.equals("Sulfuras, Hand of Ragnaros") && !items[i].name.equals("Conjured")) {
+                    if (!items[i].name.equals("Sulfuras, Hand of Ragnaros") && !items[i].name.equals("Conjured Mana Cake")) {
                         items[i].quality = items[i].quality - 1;
                     }
-                    if (items[i].name.equals("Conjured")) {
+                    if (items[i].name.equals("Conjured Mana Cake")) {
                         items[i].quality = items[i].quality - 2;
                     }
                 }
@@ -47,10 +47,10 @@ public class GildedRose {
                 if (!items[i].name.equals("Aged Brie")) {
                     if (!items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
                         if (items[i].quality > 0) {
-                            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros") && !items[i].name.equals("Conjured")) {
+                            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros") && !items[i].name.equals("Conjured Mana Cake")) {
                                 items[i].quality = items[i].quality - 1;
                             }
-                            if (items[i].name.equals("Conjured")) {
+                            if (items[i].name.equals("Conjured Mana Cake")) {
                                 items[i].quality = items[i].quality - 2;
                             }
                         }
