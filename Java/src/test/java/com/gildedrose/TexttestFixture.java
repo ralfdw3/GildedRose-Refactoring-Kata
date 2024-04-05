@@ -4,7 +4,7 @@ import src.main.java.com.gildedrose.GildedRose;
 import src.main.java.com.gildedrose.Item;
 
 public class TexttestFixture {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         System.out.println("OMGHAI!");
 
         Item[] items = new Item[] {
@@ -35,5 +35,4 @@ public class TexttestFixture {
             app.updateQuality();
         }
     }
-
 }

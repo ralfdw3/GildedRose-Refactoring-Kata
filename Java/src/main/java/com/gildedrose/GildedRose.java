@@ -1,68 +1,46 @@
 package src.main.java.com.gildedrose;
 
+import src.main.java.com.gildedrose.items.*;
+
+import java.util.List;
+import java.util.Objects;
+
+import static src.main.java.com.gildedrose.Utils.*;
+import static src.main.java.com.gildedrose.Utils.CONJURED;
+import static src.main.java.com.gildedrose.items.Products.updateSellIn;
+
 public class GildedRose {
     public Item[] items;
+    private static final List<Class<?>> classes = List.of(AgedBrie.class, Sulfuras.class, BackstagePasses.class, Conjured.class);
+
 
     public GildedRose(Item[] items) {
         this.items = items;
     }
 
-    public void updateQuality() {
-        for (int i = 0; i < items.length; i++) {
-            if (!items[i].name.equals("Aged Brie")
-                && !items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                if (items[i].quality > 0) {
-                    if (!items[i].name.equals("Sulfuras, Hand of Ragnaros") && !items[i].name.equals("Conjured Mana Cake")) {
-                        items[i].quality = items[i].quality - 1;
-                    }
-                    if (items[i].name.equals("Conjured Mana Cake")) {
-                        items[i].quality = items[i].quality - 2;
-                    }
-                }
-            } else {
-                if (items[i].quality < 50) {
-                    items[i].quality = items[i].quality + 1;
+    public void updateQuality() throws Exception {
+        for (Item item : items) {
+            for (Class<?> clazz : classes) {
+                Object instance = clazz.getDeclaredConstructor().newInstance();
+                String itemName = (String) clazz.getDeclaredMethod(METHOD_GET_ITEM_NAME).invoke(instance);
 
-                    if (items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].sellIn < 11) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
-
-                        if (items[i].sellIn < 6) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
-                    }
+                if (itemIsOfThisClazz(item, itemName) || isConjuredItem(item, itemName)) {
+                    clazz.getDeclaredMethod(METHOD_UPDATE_QUALITY, Item.class).invoke(instance, item);
+                    updateSellIn(item);
+                    return;
                 }
             }
-
-            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                items[i].sellIn = items[i].sellIn - 1;
-            }
-
-            if (items[i].sellIn < 0) {
-                if (!items[i].name.equals("Aged Brie")) {
-                    if (!items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].quality > 0) {
-                            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros") && !items[i].name.equals("Conjured Mana Cake")) {
-                                items[i].quality = items[i].quality - 1;
-                            }
-                            if (items[i].name.equals("Conjured Mana Cake")) {
-                                items[i].quality = items[i].quality - 2;
-                            }
-                        }
-                    } else {
-                        items[i].quality = items[i].quality - items[i].quality;
-                    }
-                } else {
-                    if (items[i].quality < 50) {
-                        items[i].quality = items[i].quality + 1;
-                    }
-                }
-            }
+            Standart standart = new Standart();
+            standart.updateQuality(item);
+            updateSellIn(item);
         }
+    }
+
+    private static boolean itemIsOfThisClazz(Item item, String itemName) {
+        return Objects.equals(item.name, itemName);
+    }
+
+    private static boolean isConjuredItem(Item item, String itemName) {
+        return item.name.startsWith(CONJURED) && itemName.startsWith(CONJURED);
     }
 }
